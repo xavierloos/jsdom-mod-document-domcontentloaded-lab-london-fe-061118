@@ -1,53 +1,90 @@
 # Document Ready
 
+## Problem Statement
+
+When we first learned about events, it made sense to talk about events in terms
+of things users do: clicking or mousing or typing.
+
+But JavaScript events can also be less obvious.
+
+* "When we fetched some data"
+* "When the window appeared"
+* "When the DOM's data finished updating the screen"
+
+We're going to learn more about that last one. That event is called
+`DOMContentLoaded`. It's a good way to set up learning more about the AJAX
+technique (update the DOM based on fetched data) that we'll cover later.
+
 ## Objectives
-+ Set up a call to `document.ready()`
-+ Explain why `document.ready` is important
 
-## Introduction
+1. Explain why `DOMContentLoaded` is important
+2. Set up an event on `DOMContentLoaded`
 
-We don't ever want to write our JavaScript and jQuery inside our HTML files. For the same reasons that we want to separate out our CSS from our HTML, we want to separate out our JavaScript from our HTML, too.
+## Explain Why `DOMContentLoaded` Is Important
 
-But so far we've written our JavaScript code at the bottom of our HTML `<body>` so that the code would run once the page loads. How can we run our code when it's in a totally different file? We need to guarantee that the HTML document is loaded before our other files are triggered.
+We don't ever want to write our JavaScript inside our HTML files.  For the
+same reasons that we want to separate out our CSS from our HTML, we want to
+separate out our JavaScript from our HTML, too.
 
+But let's suppose we write a file that needs to bind to the `<body>` element.
+If our friend decides to use that file and includes it in the `<head>` tag, the
+DOM will not have loaded, our code won't find a `<body>` to bind to, and our
+friend will complain that our code doesn't work.
 
-## Separating and Linking Code
+![Letting Down Obi-Wan](https://media.giphy.com/media/ziJdasPj03y0M/giphy.gif)
 
-This lesson doesn't render as a lab, but there are files within this repository you'll need to code along. Click on the Github icon in Learn, and fork and clone this repository.
+How can we make sure our code only runs _after_ the DOM has fully "resolved?"
+Why, we listen for the `DOMContentLoaded` event!
 
-If you take a look at `index.html`, you'll notice we have jQuery-flavored JavaScript code written at the bottom. Our goal is to refactor this site to move that code out into `script.js`
+## Set Up An Event On `DOMContentLoaded`
 
-The first thing we need to do is load `script.js` in `index.html`. In the olden days (the 1990s and 2000s), we used to import our scripts in the `<head>` of our HTML documents. As our applications grew more interactive, our JavaScript files grew larger and our pages took longer to load. This was because the browser loads _everything_ in between the `<head>` tags before it attempts to render the page. Once the browser gets to `<body>`, it starts to load things in order (synchronously).
+### Part I:
 
-When that's just painting tags with the appropriate styles, the browser simply hums along; but when it encounters a `<script>` tag, it either needs to evaluate the script or else make a request to the location specified in the `<script>` tag's `src` attribute. These requests take time, so nowadays, we put all of our `<script>` tags at the bottom of `<body>`, below all of the static HTML content. Go ahead and add a `<script>` tag for "script.js" at the bottom of `<body>`:
+If you take a look at `index-demo.html`, you'll notice we have event-handling code
+JavaScript code written at the bottom.
 
-```html
-<script src="script.js"></script>
+Fire up a web server with the `httpserver` command. Open the `index-demo.html`
+(something like: `http://<address>/index-demo.html`), page in the browser and
+open the DevTools console. Clicking anywhere in the body should trigger a
+message to the console.
+
+View the page and confirm the JavaScript code works.
+
+### Part II:
+
+Next, move this code into a new file called `script.js`. Include `script.js` in
+the `<head>` of `index-demo.html`. Reload the page. Your click event won't
+work. You might notice JavaScript giving an error:
+
+```text
+Uncaught TypeError: Cannot read property 'addEventListener' of null
 ```
-Now that our HTML file can find our JavaScript File, let's remove the code between the `script` tags from the bottom of our HTML file and move it to `script.js`.
 
-In this simple example, you should already see `"this is so freaking cool."` appended to `div#text`. But normally, it's not safe to execute JavaScript code until the browser tells us it's ready.
+Here the browser is telling is it tried to add a listener to an event that
+didn't exist, `<body>`.
 
-## Document Ready
-
-Thankfully, the browser has a built-in way to determine when a page is loaded. You'll be coding along in `index.html` and `script.js`.
-
-In `script.js`, we need to set up a document ready in order to detect when our HTML page has loaded, and the document is ready to be manipulated:
+Edit the code in `script.js` to "wrap" the code inside of an event handler for
+`DOMContentLoaded`. Refresh the page. As you can see, the wrapping code is the
+same handler style you've used for all the other DOM elements. This time,
+though, you're binding to the DOM itself.
 
 ```js
-$(document).ready(function() {
-  // code to be executed goes here
-});
+document.addEventListener("DOMContentLoaded", e => {
+  document.querySelector("body")
+   .addEventListener("click", e => console.log("Reggae, Reggae!"));
+})
 ```
 
-The `$` is a shortcut for `jQuery`, and provides an interface to the library. Every time you see `$`, think `jQuery`.
+Once the `DOMContentLoaded` event fires, the event happens. Any events we set
+up there will now have the required nodes to "listen on."
 
-Once the `load` event fires (which we've told jQuery to listen for with `$(document).ready()`), the rest of the code will fire. Place the document ready around the jQuery already in `script.js`. Save your changes, and refresh in the browser. You should see the text appear in the browser!
+## Moving On
 
-## Resources
+In order to move on launch the test suite with `learn`. Once you're passing the
+test, you'll be allowed to `learn submit` and move on.
 
-+ [Learn jQuery](http://learn.jquery.com/using-jquery-core/document-ready/)
-+ [jQuery Docs](https://api.jquery.com/ready/)
+## Conclusion
 
-
-<p class='util--hide'>View <a href='https://learn.co/lessons/js-jquery-document-ready-readme'>Document Ready</a> on Learn.co and start learning to code for free.</p>
+In this lesson you learned to bind events to DOM events that aren't user
+controlled. This will allow you to operate on the DOM with the guarantee that
+the DOM nodes you need are there.
