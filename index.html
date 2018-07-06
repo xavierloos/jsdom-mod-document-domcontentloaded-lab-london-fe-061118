@@ -1,13 +1,34 @@
-<!doctype html>
-<html>
-<head>
-  <title> My Site </title>
-</head>
-<body>
-  <p id="text">jQuery is so cool. It lets me add text to my page programmatically. </p>
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
-  <script>
-   $("#text").append("this is so freaking cool.");
-  </script>
-</body>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title> My Site </title>
+    <meta name="description" content="Document DOMContentLoaded Event lab in the Learn.co curriculum">
+    <meta name="author" content="Flatiron School">
+
+    <link rel="stylesheet" href="node_modules/mocha/mocha.css">
+  </head>
+
+  <body>
+
+    <!-- <div> for Mocha to display test results. -->
+    <div id="mocha"></div>
+
+    <!-- Include Mocha and set it up for BDD-style testing. -->
+    <script src="node_modules/mocha/mocha.js"></script>
+    <script>mocha.setup('bdd');</script>
+
+    <!-- Include Chai as the matcher library. -->
+    <script src="node_modules/chai/chai.js"></script>
+
+    <!-- Include the student's JavaScript file. -->
+    <script src="index.js"></script>
+
+    <!-- Include the JavaScript file containing the tests. -->
+    <script src="test/indexTest.js"></script>
+
+    <!-- Include Flatiron School's test runner to push results to Learn. -->
+    <script src="node_modules/learn-browser/learnBrowser.min.js"></script>
+
+  </body>
 </html>
