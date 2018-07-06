@@ -80,8 +80,8 @@ up there will now have the required nodes to "listen on."
 
 ## Moving On
 
-In order to move on launch the test suite with `learn`. Once you're passing the
-test, you'll be allowed to `learn submit` and move on.
+In order to move on run, and satisfy the tests using `learn`. Once you're passing the
+test, enter `learn submit` and move on.
 
 ## Conclusion
 
