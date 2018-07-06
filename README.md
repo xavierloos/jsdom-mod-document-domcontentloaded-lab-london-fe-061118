@@ -31,7 +31,7 @@ If our friend decides to use that file and includes it in the `<head>` tag, the
 DOM will not have loaded, our code won't find a `<body>` to bind to, and our
 friend will complain that our code doesn't work.
 
-![Letting Down Obi-Wan](https://media.giphy.com/media/ziJdasPj03y0M/giphy.gif)
+![Letting Down Obi-Wan](https://media.giphy.com/media/3ornjJSq2s9xznhO80/giphy.gif)
 
 How can we make sure our code only runs _after_ the DOM has fully "resolved?"
 Why, we listen for the `DOMContentLoaded` event!
